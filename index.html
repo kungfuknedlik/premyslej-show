@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Pevný světlý režim: tmavý režim prohlížeče nesmí stránku přebarvit. -->
+<meta name="color-scheme" content="only light">
+<!-- Prototyp: dokud není web hotový, vyhledávače ho nemají indexovat. -->
+<meta name="robots" content="noindex">
+<title>Přemýšlej – technologie jako nástroj, ne jako náhrada myšlení</title>
+<meta name="description" content="Přemýšlej je vzdělávací projekt EP Industries a Calliditas. Od roku 2019 přináší na základní a střední školy lekce o kyberbezpečnosti, kritickém myšlení, umělé inteligenci a digitální psychohygieně.">
+
+<link rel="icon" type="image/png" href="assets/logos/premyslej-symbol.png">
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/Inter-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/Inter-latin-ext.woff2" crossorigin>
+<link rel="preload" as="image" href="assets/posters/usek-01.webp" fetchpriority="high">
+<link rel="stylesheet" href="css/scena.css">
+<link rel="stylesheet" href="css/stranka.css">
+<link rel="stylesheet" href="css/obsah.css">
+
+<script>
+/* Třída .js zapíná scénu řízenou rolováním. Bez ní je stránka běžný text pod sebou.
+   Kdyby se hlavní skript nenačetl, třída se po chvíli zase odebere a obsah zůstane čitelný.
+   Třída .uvitani-ceka připraví úvodní uvítání; při omezeném pohybu se nepřidá. */
+(function () {
+  var k = document.documentElement;
+  k.classList.add('js');
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) k.classList.add('uvitani-ceka');
+  setTimeout(function () {
+    if (!k.classList.contains('scena-bezi')) k.classList.remove('js', 'uvitani-ceka', 'uvitani-bezi');
+  }, 5000);
+})();
+</script>
+<script src="js/scena.js" defer></script>
+<script src="js/uvitani.js" defer></script>
+<script src="js/obsah.js" defer></script>
+</head>
+<body>
+<a class="preskocit" href="#obsah">Přeskočit na obsah</a>
+
+<!-- ===== Film: jedna pevná scéna, úseky leží trvale přes sebe =====
+     Devět klipů: úseky 1, 2a, 2b, 3–8. Váha úseku = délka klipu × 0,22 (úsek 7 je vrchol, 8 s).
+     data-usek je jméno úseku; titulky a zastávky se na něj odkazují zápisem „4:0.85“ (85 % úseku 4). -->
+<div class="scena" data-scena aria-hidden="true">
+  <!-- data-krivka zkracuje konec úseku 1, kde se obraz skoro nemění (detail mezery):
+       poslední 1,1 s klipu projede asi 2,7× rychleji. Váha je o to menší. -->
+  <div class="usek usek--1" data-usek="1" data-vaha="0.946" data-delka="5" data-krivka="0.907:0.78">
+    <img class="usek__nahled" src="assets/posters/usek-01.webp" alt="" width="1920" height="1080" fetchpriority="high">
+    <video class="usek__klip" muted playsinline preload="none" tabindex="-1" data-src="assets/clips/usek-01.mp4"></video>
+  </div>
+  <!-- náhledy dalších úseků načítá skript, až když jsou v dosahu (data-src) -->
+  <div class="usek usek--2a" data-usek="2a" data-vaha="1.1" data-delka="5">
+    <img class="usek__nahled" data-src="assets/posters/usek-02a.webp" alt="" width="1920" height="1080">
+    <video class="usek__klip" muted playsinline preload="none" tabindex="-1" data-src="assets/clips/usek-02a.mp4"></video>
+  </div>
+  <div class="usek usek--2b" data-usek="2b" data-vaha="1.1" data-delka="5">
+    <img class="usek__nahled" data-src="assets/posters/usek-02b.webp" alt="" width="1920" height="1080">
+    <video class="usek__klip" muted playsinline preload="none" tabindex="-1" data-src="assets/clips/usek-02b.mp4"></video>
+  </div>
+  <div class="usek usek--3" data-usek="3" data-vaha="1.1" data-delka="5">
+    <img class="usek__nahled" data-src="assets/posters/usek-03.webp" alt="" width="1920" height="1080">
+    <video class="usek__klip" muted playsinline preload="none" tabindex="-1" data-src="assets/clips/usek-03.mp4"></video>
+  </div>
+  <div class="usek usek--4" data-usek="4" data-vaha="1.1" data-delka="5">
+    <img class="usek__nahled" data-src="assets/posters/usek-04.webp" alt="" width="1920" height="1080">
+    <video class="usek__klip" muted playsinline preload="none" tabindex="-1" data-src="assets/clips/usek-04.mp4"></video>
+  </div>
+  <div class="usek usek--5" data-usek="5" data-vaha="1.1" data-delka="5">
+    <img class="usek__nahled" data-src="assets/posters/usek-05.webp" alt="" width="1920" height="1080">
+    <video class="usek__klip" muted playsinline preload="none" tabindex="-1" data-src="assets/clips/usek-05.mp4"></video>
+  </div>
+  <div class="usek usek--6" data-usek="6" data-vaha="1.1" data-delka="5">
+    <img class="usek__nahled" data-src="assets/posters/usek-06.webp" alt="" width="1920" height="1080">
+    <video class="usek__klip" muted playsinline preload="none" tabindex="-1" data-src="assets/clips/usek-06.mp4"></video>
+  </div>
+  <div class="usek usek--7" data-usek="7" data-vaha="1.76" data-delka="8">
+    <img class="usek__nahled" data-src="assets/posters/usek-07.webp" alt="" width="1920" height="1080">
+    <video class="usek__klip" muted playsinline preload="none" tabindex="-1" data-src="assets/clips/usek-07.mp4"></video>
+  </div>
+  <div class="usek usek--8" data-usek="8" data-vaha="1.1" data-delka="5">
+    <img class="usek__nahled" data-src="assets/posters/usek-08.webp" alt="" width="1920" height="1080">
+    <video class="usek__klip" muted playsinline preload="none" tabindex="-1" data-src="assets/clips/usek-08.mp4"></video>
+  </div>
+  <img class="scena__konec" data-konec data-src="assets/posters/konec.webp" alt="" width="1920" height="1080">
+  <!-- Bílý závoj: od konce úseku 8 dorovná skoro bílý poslední snímek do čisté bílé první sekce. -->
+  <div class="scena__zavoj" data-zavoj="8:0.85"></div>
+</div>
+
+<main id="obsah">
+
+  <!-- ===== Titulky: každý blok má na dráze své okno (data-okno="od do") =====
+       Polohy jsou zapsané podle úseků: „4:0.50“ = polovina úseku 4. Zastávka prezentačního režimu
+       (data-zastavka) je tam, kde titulek plně svítí. -->
+  <div class="titulky" data-titulky>
+
+    <section class="okno okno--svetle okno--uvod" data-okno="1:0.00 1:0.80" data-dobeh="0.19vh" data-zastavka="1:0" data-hned aria-labelledby="claim">
+      <img class="okno__obraz" src="assets/posters/usek-01.webp" alt="Skleněný předmět ze šesti šikmých modrých bloků, který tvarem připomíná symbol z loga Přemýšlej" width="1920" height="1080" loading="lazy">
+      <div class="podlozka"></div>
+      <div class="okno__text">
+        <img class="znacka" src="assets/logos/premyslej-420.webp" alt="Přemýšlej" width="420" height="167">
+        <h1 class="claim" id="claim"><span>Technologie jako nástroj.</span> <span>Ne jako náhrada myšlení.</span></h1>
+        <div class="partneri">
+          <a class="partner" href="https://www.epindustries.cz/" target="_blank" rel="noopener">
+            <small>Projekt</small>
+            <img class="partner__ep" src="assets/logos/ep-industries-320.webp" alt="EP Industries" width="320" height="73">
+          </a>
+          <a class="partner" href="https://calliditas.net/" target="_blank" rel="noopener">
+            <small>Obsah a&nbsp;lektoři</small>
+            <img src="assets/logos/calliditas-400.webp" alt="Calliditas" width="400" height="132">
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bílá značka pro tmavé úseky filmu (originální logo je čitelné jen na světlé). Jen se scénou.
+         Začíná až v tmavé části úseku 2b; mezikotva uvnitř mezery má vlevo nahoře světlou plochu. -->
+    <div class="okno okno--znacka" data-okno="2b:0.50 8:0.30" data-nabeh="0.1vh" aria-hidden="true">
+      <img class="znacka" data-src="assets/logos/premyslej-bila-420.webp" alt="" width="420" height="167">
+    </div>
+
+    <section class="okno okno--tmave okno--dole" data-okno="2b:0.42 3:0.04" data-zastavka="2b:0.74">
+      <img class="okno__obraz" src="assets/posters/usek-03.webp" alt="Dlouhé skleněné dráhy v&nbsp;tmavě modrém prostoru se sbíhají ke vzdálenému světlu" width="1920" height="1080" loading="lazy">
+      <div class="podlozka"></div>
+      <div class="okno__text">
+        <p class="veta">Digitální prostředí přináší obrovské příležitosti, ale zároveň celou škálu rizik.</p>
+      </div>
+    </section>
+
+    <section class="okno okno--tmave okno--dole" data-okno="3:0.56 4:0.12" data-zastavka="3:0.90">
+      <img class="okno__obraz" src="assets/posters/usek-04.webp" alt="Krajina ze skleněných bloků v&nbsp;modrém oparu, v&nbsp;dálce skupiny skleněných staveb" width="1920" height="1080" loading="lazy">
+      <div class="podlozka"></div>
+      <div class="okno__text">
+        <p class="veta">Od roku 2019 ve školách.</p>
+        <p class="doplnek">Lekce o&nbsp;kyberbezpečnosti, kritickém myšlení, umělé inteligenci a&nbsp;digitální psychohygieně.</p>
+      </div>
+    </section>
+
+    <section class="okno okno--tmave okno--dole" data-okno="4:0.50 5:0.10" data-zastavka="4:0.86">
+      <img class="okno__obraz" src="assets/posters/usek-05.webp" alt="Matné skleněné tabule těsně kolem kamery, uprostřed zůstal úzký průhled" width="1920" height="1080" loading="lazy">
+      <div class="podlozka"></div>
+      <div class="okno__text">
+        <p class="veta">Kyberbezpečnost.</p>
+        <p class="doplnek">Základní kyberhrozby a&nbsp;způsoby, jak se jim bránit.</p>
+      </div>
+    </section>
+
+    <section class="okno okno--tmave okno--dole" data-okno="5:0.55 6:0.12" data-zastavka="5:0.97">
+      <img class="okno__obraz" src="assets/posters/usek-06.webp" alt="Dvě zrcadlové řady stejných skleněných bloků, vedle každého stojí bledší dvojník" width="1920" height="1080" loading="lazy">
+      <div class="podlozka"></div>
+      <div class="okno__text">
+        <p class="veta">Kritické myšlení.</p>
+        <p class="doplnek">K&nbsp;čemu je dobré? Kdy ho používat?</p>
+      </div>
+    </section>
+
+    <!-- před vrcholem je ticho: tenhle titulek skončí s úsekem 6 a první část úseku 7 je bez textu -->
+    <section class="okno okno--tmave okno--dole" data-okno="6:0.42 6:0.98" data-zastavka="6:0.80">
+      <img class="okno__obraz" src="assets/posters/usek-07.webp" alt="Stavba ze skleněných bloků, která se sama skládá: část bloků se ještě vznáší ve vzduchu" width="1920" height="1080" loading="lazy">
+      <div class="podlozka"></div>
+      <div class="okno__text">
+        <p class="veta">Umělá inteligence.</p>
+        <p class="doplnek">Co to je, jak ji využít a&nbsp;jaké hrozby s&nbsp;sebou nese.</p>
+      </div>
+    </section>
+
+    <!-- vrchol příběhu -->
+    <section class="okno okno--tmave okno--dole" data-okno="7:0.66 8:0.16" data-zastavka="7:0.93">
+      <img class="okno__obraz" src="assets/posters/usek-08.webp" alt="Tmavý, tichý, skoro prázdný prostor s&nbsp;pásem světla na obzoru" width="1920" height="1080" loading="lazy">
+      <div class="podlozka"></div>
+      <div class="okno__text">
+        <p class="veta">Digitální psychohygiena.</p>
+        <p class="doplnek">Rovnováha mezi reálným a&nbsp;digitálním světem.</p>
+      </div>
+    </section>
+
+    <!-- finále: claim tmavým písmem na světlém filmu a originální loga, stejně jako v úvodu -->
+    <section class="okno okno--svetle okno--finale" data-okno="8:0.62 8:1.00" aria-label="Závěr">
+      <img class="okno__obraz" src="assets/posters/konec.webp" alt="Světlý, skoro bílý prázdný prostor" width="1920" height="1080" loading="lazy">
+      <div class="podlozka"></div>
+      <div class="okno__text">
+        <img class="znacka" src="assets/logos/premyslej-420.webp" alt="Přemýšlej" width="420" height="167" loading="lazy">
+        <p class="claim"><span>Technologie jako nástroj.</span> <span>Ne jako náhrada myšlení.</span></p>
+        <div class="partneri">
+          <a class="partner" href="https://www.epindustries.cz/" target="_blank" rel="noopener">
+            <small>Projekt</small>
+            <img class="partner__ep" src="assets/logos/ep-industries-320.webp" alt="EP Industries" width="320" height="73">
+          </a>
+          <a class="partner" href="https://calliditas.net/" target="_blank" rel="noopener">
+            <small>Obsah a&nbsp;lektoři</small>
+            <img src="assets/logos/calliditas-400.webp" alt="Calliditas" width="400" height="132">
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ===== Pás: jeho výška tvoří rolovací dráhu filmu ===== -->
+  <div class="pas" data-pas></div>
+
+  <!-- ==========================================================================
+       Klasické sekce pod letem (styl směru C). Texty jsou zkrácené a členěné
+       z podklady/texty/, fakta beze změny. Nadpisy a texty jsou schválené.
+       ========================================================================== -->
+  <div class="pod-letem">
+
+    <nav class="lista" aria-label="Sekce stránky">
+      <a class="lista__logo" href="#projekt"><img src="assets/logos/premyslej-420.webp" alt="Přemýšlej" width="420" height="167" loading="lazy"></a>
+      <ul>
+        <li><a href="#projekt">O&nbsp;projektu</a></li>
+        <li><a href="#osa">Časová osa</a></li>
+        <li><a href="#firmy">Kdo za tím stojí</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
+
+    <!-- ===== O projektu ===== -->
+    <section class="sekce" id="projekt" aria-labelledby="n-projekt">
+      <div class="obal">
+        <div class="uvodnik">
+          <p class="stitek odhal">O&nbsp;projektu</p>
+          <div>
+            <h2 class="teze odhal" id="n-projekt">Připravit mladou generaci na svět, ve kterém bude žít a&nbsp;pracovat.</h2>
+            <p class="perex odhal">Od roku 2019 se projekt Přemýšlej věnuje nejpalčivějším problémům, které s&nbsp;sebou přináší digitální svět: kyberhrozbám, dezinformacím a&nbsp;fake news, dopadům technologií na tělesné a&nbsp;duševní zdraví i&nbsp;přínosům a&nbsp;výzvám umělé inteligence.</p>
+          </div>
+        </div>
+        <div class="pilire">
+          <article class="pilir odhal">
+            <h3>Lektoři přímo ve škole</h3>
+            <p>Lektoři společnosti Calliditas realizují moduly bezplatně přímo na školách. Jsou určené pro 2.&nbsp;stupeň základních škol a&nbsp;pro střední školy a&nbsp;trvají 2 nebo 4&nbsp;hodiny.</p>
+          </article>
+          <article class="pilir odhal">
+            <h3>Diskuse místo přednášení</h3>
+            <p>Lektoři nejen předávají informace, ale především otevírají s&nbsp;žáky a&nbsp;studenty diskusi, podporují kritický a&nbsp;analytický pohled na technologie a&nbsp;vyzývají k&nbsp;formulaci vlastních názorů.</p>
+          </article>
+          <article class="pilir odhal">
+            <h3>Vlastní zážitek</h3>
+            <p>K&nbsp;lekcím patří prezentace a&nbsp;aplikace pro interaktivní tabule, metodické materiály a&nbsp;u&nbsp;vybraných modulů zážitkové aplikace pro virtuální a&nbsp;rozšířenou realitu.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Časová osa: sedm programů od nejnovějšího, vedle nich lišta let jako navigace.
+         U každého programu je pohromadě text, roky, záznam aplikace a fotky.
+         Jak přidat nový modul: NAVOD-novy-modul.md ===== -->
+    <section class="sekce sekce--seda" id="osa" aria-labelledby="n-osa">
+      <div class="obal">
+        <div class="uvodnik">
+          <p class="stitek odhal">Časová osa</p>
+          <div>
+            <h2 class="teze odhal" id="n-osa">Od roku 2019 ve školách</h2>
+            <p class="perex odhal">Sedm programů a&nbsp;dvanáct modulů. Programy na sebe navazovaly a&nbsp;jejich období se překrývají.</p>
+          </div>
+        </div>
+
+        <!-- Projekt v číslech jako úvod k modulům. Ikony jsou ze současného webu; každá má stejně velké pole,
+             takže čísla stojí v jedné linii. Konečné hodnoty jsou v HTML, skript je při prvním zobrazení
+             jednou krátce „napočítá“ (nejvýš 1,2 s). -->
+        <div class="cisla-uvod odhal" id="cisla">
+          <h3 class="cisla__nadpis">Projekt v&nbsp;číslech</h3>
+          <dl class="cisla">
+            <div>
+              <dt><span class="cisla__ikona"><img src="assets/img/ikony/studenti.webp" alt="" width="394" height="347" loading="lazy"></span><span data-pocitadlo>71&nbsp;400</span></dt>
+              <dd><b>proškolených studentů</b> na základních a&nbsp;středních školách</dd>
+            </div>
+            <div>
+              <dt><span class="cisla__ikona"><img src="assets/img/ikony/osloveni.webp" alt="" width="377" height="356" loading="lazy"></span><span data-pocitadlo>250&nbsp;000</span></dt>
+              <dd><b>oslovených lidí</b> napříč celkovým mediálním prostorem</dd>
+            </div>
+            <div>
+              <dt><span class="cisla__ikona"><img src="assets/img/ikony/moduly.webp" alt="" width="390" height="357" loading="lazy"></span><span data-pocitadlo>12</span></dt>
+              <dd><b>autorských modulů</b> vzdělávacích programů</dd>
+            </div>
+            <div>
+              <dt><span class="cisla__ikona"><img src="assets/img/ikony/aplikace.webp" alt="" width="325" height="361" loading="lazy"></span><span data-pocitadlo>4</span></dt>
+              <dd><b>VR a&nbsp;AR aplikace</b> navržené pro vzdělávání</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="osa">
+
+          <!-- Lišta let: navigace po modulech. Na širokých obrazovkách svislý sloupec vlevo, na užších
+               vodorovný pás pod hlavičkou. Položky ve stejném pořadí jako moduly (nejnovější první). -->
+          <nav class="osa-nav" aria-label="Programy podle roku" data-osa-nav>
+            <ol>
+              <li><a href="#p-digitalni-psychohygiena"><b>2026</b><i> – </i><span>Digitální psychohygiena</span> <small>aktuální program</small></a></li>
+              <li><a href="#p-ai-akademie"><b>2024</b><i> – </i><span>AI Akademie</span></a></li>
+              <li><a href="#p-filosofie-pohybu"><b>2022</b><i> – </i><span>Filosofie pohybu</span></a></li>
+              <li><a href="#p-virtualni-akademie"><b>2021</b><i> – </i><span>Virtuální akademie</span></a></li>
+              <li><a href="#p-ai-mysleni"><b>2021</b><i> – </i><span>AI a&nbsp;informatické myšlení</span></a></li>
+              <li><a href="#p-kriticke-mysleni"><b>2019</b><i> – </i><span>Kritické myšlení</span></a></li>
+              <li><a href="#p-kyberbezpecnost"><b>2019</b><i> – </i><span>Kyberbezpečnost</span></a></li>
+            </ol>
+          </nav>
+
+          <div class="moduly">
+
+            <article class="modul modul--aktualni odhal" id="p-digitalni-psychohygiena">
+              <div class="modul__text">
+                <p class="modul__roky">2026 <span class="odznak odznak--aktualni">aktuální program</span></p>
+                <h3>Digitální psychohygiena</h3>
+                <p class="modul__moduly">1 modul: Digitální psychohygiena</p>
+                <p>Nový modul o&nbsp;vztahu mezi technologiemi a&nbsp;duševním zdravím. Prožitkově laděná dvouhodinovka ukazuje studentům, jak digitální prostředí ovlivňuje jejich myšlení, emoce i&nbsp;každodenní návyky, a&nbsp;přináší praktická cvičení pro hledání rovnováhy mezi reálným a&nbsp;digitálním světem.</p>
+                <p>Modul vznikl pod odbornou záštitou adiktoložky a&nbsp;terapeutky Mgr.&nbsp;Michaely Štáfkové, MBA.</p>
+                <blockquote>
+                  <p>„Řešením není technologie odmítat nebo se jim úplně vyhýbat. Digitální svět je přirozenou součástí našich životů – o&nbsp;to důležitější je učit děti, jak ho používat zdravě a&nbsp;vědomě.“</p>
+                  <footer>Mgr.&nbsp;Michaela Štáfková, MBA</footer>
+                </blockquote>
+              </div>
+              <div class="modul__media">
+                <div class="galerie" data-galerie aria-label="Fotky a&nbsp;snímky: Digitální psychohygiena">
+                  <a class="galerie__hlavni" href="assets/img/foto/dp-lektorka-1920.webp" data-foto><img src="assets/img/foto/dp-lektorka-640.webp" srcset="assets/img/foto/dp-lektorka-640.webp 640w, assets/img/foto/dp-lektorka-1280.webp 1280w" sizes="(max-width: 900px) 100vw, 50vw" alt="Lektorka stojí před třídou u&nbsp;projekce, žáci stojí kolem lavic" width="1280" height="960" loading="lazy"></a>
+                  <ul class="galerie__pas">
+                    <li><a href="assets/img/foto/dp-trida-1920.webp" data-foto><img src="assets/img/foto/dp-trida-640.webp" alt="Třída při práci, v&nbsp;popředí lavice s&nbsp;barevnými pracovními listy" width="640" height="480" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/dp-prezentace-1920.webp" data-foto><img src="assets/img/foto/dp-prezentace-640.webp" alt="Dva žáci zezadu sledují prezentaci promítanou na tabuli" width="640" height="480" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/dp-snimek-1-1920.webp" data-foto><img src="assets/img/foto/dp-snimek-1-640.webp" alt="Snímek prezentace „Funguju vědomě“: nejedu na autopilota, vnímám sebe a&nbsp;své okolí, všímám si, přemýšlím o&nbsp;tom, co a&nbsp;jak dělám" width="640" height="358" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/dp-snimek-2-1920.webp" data-foto><img src="assets/img/foto/dp-snimek-2-640.webp" alt="Snímek prezentace „Detox“: telefon s&nbsp;rozbitým displejem a&nbsp;kladivo" width="640" height="358" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/dp-snimek-3-1920.webp" data-foto><img src="assets/img/foto/dp-snimek-3-640.webp" alt="Snímek prezentace „Offline vztahy“: fotografie lidí, kteří tráví čas spolu" width="640" height="358" loading="lazy"></a></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="modul odhal" id="p-ai-akademie">
+              <div class="modul__text">
+                <p class="modul__roky">2024–2025 <span class="odznak">ukončený program</span></p>
+                <h3>AI Akademie</h3>
+                <p class="modul__moduly">2 moduly: Kyberbezpečnost a&nbsp;soft skills · Argumentační souboj</p>
+                <p>Dvouhodinová lekce Kyberbezpečnost a&nbsp;soft skills hledá dovednosti, které studentům pomohou neztratit se v&nbsp;digitální džungli, a&nbsp;způsoby, jak využívat technologie bezpečně a&nbsp;eticky.</p>
+                <p>Čtyřhodinový workshop Argumentační souboj rozvíjí schopnost přemýšlet kriticky, tvořivě a&nbsp;sebevědomě. V&nbsp;obou modulech si studenti prakticky vyzkouší práci s&nbsp;umělou inteligencí a&nbsp;techniky promptování.</p>
+              </div>
+              <div class="modul__media">
+                <div class="galerie" data-galerie aria-label="Fotky a&nbsp;snímky: AI Akademie">
+                  <a class="galerie__hlavni" href="assets/img/foto/aia-studentky-1920.webp" data-foto><img src="assets/img/foto/aia-studentky-640.webp" srcset="assets/img/foto/aia-studentky-640.webp 640w, assets/img/foto/aia-studentky-1280.webp 1280w" sizes="(max-width: 900px) 100vw, 50vw" alt="Studentky společně pracují s&nbsp;tabletem nad pracovním listem" width="1280" height="960" loading="lazy"></a>
+                  <ul class="galerie__pas">
+                    <li><a href="assets/img/foto/aia-skupina-1920.webp" data-foto><img src="assets/img/foto/aia-skupina-640.webp" alt="Skupina žáků se sklání nad tabletem a&nbsp;pracovním listem" width="640" height="480" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/aia-lektor-1920.webp" data-foto><img src="assets/img/foto/aia-lektor-640.webp" alt="Lektor u&nbsp;projekce mluví ke skupině studentů sedících na stoličkách" width="640" height="480" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/aia-snimek-1-1920.webp" data-foto><img src="assets/img/foto/aia-snimek-1-640.webp" alt="Snímek prezentace o&nbsp;promptování: role, cíl, tón a&nbsp;styl, fráze" width="640" height="358" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/aia-snimek-2-1920.webp" data-foto><img src="assets/img/foto/aia-snimek-2-640.webp" alt="Snímek prezentace s&nbsp;výstřižky zpráv a&nbsp;grafy o&nbsp;sociálních sítích a&nbsp;duševním zdraví mladých lidí" width="640" height="358" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/aia-snimek-3-1920.webp" data-foto><img src="assets/img/foto/aia-snimek-3-640.webp" alt="Snímek prezentace s&nbsp;vysvětlením pojmu umělá inteligence" width="640" height="356" loading="lazy"></a></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="modul odhal" id="p-filosofie-pohybu">
+              <div class="modul__text">
+                <p class="modul__roky">2022–2023 <span class="odznak">ukončený program</span></p>
+                <h3>Filosofie pohybu</h3>
+                <p class="modul__moduly">1 modul: seminář Filosofie pohybu</p>
+                <p>Exkluzivní seminář pro vybrané školy věnovaný zdravým pohybovým vzorcům.</p>
+                <p>Praktický workshop zaměřený na přímý prožitek vytvořil a&nbsp;osobně odškolil Patrik Semerák, pohybový terapeut a&nbsp;trenér, spoluzakladatel centra Movement &amp;&nbsp;Therapy.</p>
+                <div class="modul__aplikace">
+                  <p class="modul__typ">AR hra</p>
+                  <p>Jako doplněk modulu vznikla interaktivní AR hra podporující zdravé návyky při práci s&nbsp;počítačem.</p>
+                </div>
+              </div>
+              <div class="modul__media">
+                <div class="prehravac">
+                  <img src="assets/video/aplikace-filosofie-pohybu.webp" alt="Záběr z&nbsp;AR hry Filosofie pohybu: model pokoje s&nbsp;postavou u&nbsp;počítače" width="1280" height="720" loading="lazy">
+                  <a class="prehravac__tlacitko" href="assets/video/aplikace-filosofie-pohybu.mp4" data-prehrat>Přehrát záznam <span>0:44</span></a>
+                </div>
+                <div class="galerie" data-galerie aria-label="Fotky a&nbsp;snímky: Filosofie pohybu">
+                  <ul class="galerie__pas">
+                    <li><a href="assets/img/foto/fp-lektor-1920.webp" data-foto><img src="assets/img/foto/fp-lektor-640.webp" alt="Lektor před třídou, vedle roll-up s&nbsp;logem projektu Přemýšlej" width="640" height="312" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/fp-skupina-1920.webp" data-foto><img src="assets/img/foto/fp-skupina-640.webp" alt="Skupinová fotografie studentů v&nbsp;tělocvičně" width="640" height="480" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/fp-kruh-1920.webp" data-foto><img class="na-vysku" src="assets/img/foto/fp-kruh-640.webp" alt="Studenti sedí na zemi v&nbsp;kruhu, záběr shora" width="640" height="854" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/fp-snimek-1-1920.webp" data-foto><img src="assets/img/foto/fp-snimek-1-640.webp" alt="Obrazovka AR hry: návod s&nbsp;popisem pasivního sedu a&nbsp;fotografií sedící postavy" width="640" height="296" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/fp-snimek-2-1920.webp" data-foto><img src="assets/img/foto/fp-snimek-2-640.webp" alt="Obrazovka AR hry: model pokoje s&nbsp;postavou u&nbsp;počítače a&nbsp;hodnocení polohy krku, páteře, boků, rukou a&nbsp;nohou" width="640" height="296" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/fp-snimek-3-1920.webp" data-foto><img src="assets/img/foto/fp-snimek-3-640.webp" alt="Obrazovka AR hry: model pokoje promítnutý kamerou na koberec, vpravo hodnocení polohy těla" width="640" height="296" loading="lazy"></a></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="modul odhal" id="p-virtualni-akademie">
+              <div class="modul__text">
+                <p class="modul__roky">2021–2025 <span class="odznak">ukončený program</span></p>
+                <h3>Virtuální akademie</h3>
+                <p class="modul__moduly">4 moduly a&nbsp;dvouhodinovky pro pedagogy</p>
+                <p>Čtyři moduly uceleně představují žákům a&nbsp;učitelům fenomén virtuální reality – její historii, současnost i&nbsp;výhledy do budoucna, její potenciál, ale také rizika a&nbsp;limity.</p>
+                <p>Dvouhodinovky pro pedagogy se zaměřují na potenciál virtuální reality ve vzdělávání a&nbsp;přináší praktické didaktické i&nbsp;metodické tipy.</p>
+              </div>
+              <div class="modul__media">
+                <div class="galerie" data-galerie aria-label="Fotky a&nbsp;snímky: Virtuální akademie">
+                  <a class="galerie__hlavni" href="assets/img/foto/va-vr-gesto-1920.webp" data-foto><img src="assets/img/foto/va-vr-gesto-640.webp" srcset="assets/img/foto/va-vr-gesto-640.webp 640w, assets/img/foto/va-vr-gesto-1280.webp 1280w" sizes="(max-width: 900px) 100vw, 50vw" alt="Žák s&nbsp;brýlemi pro virtuální realitu natahuje ruku před sebe, za ním roll-up Virtuální akademie" width="1280" height="960" loading="lazy"></a>
+                  <ul class="galerie__pas">
+                    <li><a href="assets/img/foto/va-vr-trida-1920.webp" data-foto><img src="assets/img/foto/va-vr-trida-640.webp" alt="Žák s&nbsp;brýlemi pro virtuální realitu se pohybuje po třídě" width="640" height="426" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/va-lektor-1920.webp" data-foto><img src="assets/img/foto/va-lektor-640.webp" alt="Lektor stojí u&nbsp;roll-upu Virtuální akademie a&nbsp;mluví k&nbsp;žákům" width="640" height="426" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/va-snimek-1-1920.webp" data-foto><img src="assets/img/foto/va-snimek-1-640.webp" alt="Snímek prezentace: využití virtuální reality ve zdravotnictví, architektuře, průmyslu, armádě, sportu a&nbsp;zábavě" width="640" height="360" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/va-snimek-2-1920.webp" data-foto><img src="assets/img/foto/va-snimek-2-640.webp" alt="Úvodní snímek prezentace Virtuální akademie&nbsp;2 s&nbsp;body Co už víme, Pár nových pojmů, Co jsme vynechali a&nbsp;Hurá do VR; v&nbsp;rozích loga Virtual Academy, AVE, EP Industries a&nbsp;Calliditas" width="640" height="358" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/va-snimek-3-1920.webp" data-foto><img src="assets/img/foto/va-snimek-3-640.webp" alt="Snímek prezentace o&nbsp;metaverse: 3D VR svět se vším všudy – hry, kultura, vzdělávání, společenské události" width="640" height="358" loading="lazy"></a></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="modul odhal" id="p-ai-mysleni">
+              <div class="modul__text">
+                <p class="modul__roky">2021 <span class="odznak">ukončený program</span></p>
+                <h3>AI a&nbsp;informatické myšlení</h3>
+                <p class="modul__moduly">1 modul: Umělá inteligence a&nbsp;informatické myšlení</p>
+                <p>Téma umělé inteligence jsme do škol přinesli už v&nbsp;roce 2021 – ještě před tím, než svět zaplavily nástroje generativní AI.</p>
+                <p>Modul vysvětluje samotný pojem umělé inteligence, její různé druhy a&nbsp;způsoby využití. Upozorňuje také na hrozby s&nbsp;AI spojené a&nbsp;naznačuje trendy budoucího vývoje.</p>
+                <div class="modul__aplikace">
+                  <p class="modul__typ">VR aplikace</p>
+                  <p>Uživatel se v&nbsp;malém vesmírném skútru proletí po pomyslné časové ose vývoje umělé inteligence a&nbsp;nahlédne do chytré domácnosti a&nbsp;moderního města, kde si může vyzkoušet některé vymoženosti řízené umělou inteligencí.</p>
+                </div>
+              </div>
+              <div class="modul__media">
+                <div class="prehravac">
+                  <img src="assets/video/aplikace-ai.webp" alt="Záběr z&nbsp;VR aplikace o&nbsp;umělé inteligenci: ulice virtuálního města" width="1280" height="720" loading="lazy">
+                  <a class="prehravac__tlacitko" href="assets/video/aplikace-ai.mp4" data-prehrat>Přehrát záznam <span>1:38</span></a>
+                </div>
+                <div class="galerie" data-galerie aria-label="Fotky a&nbsp;snímky: AI a&nbsp;informatické myšlení">
+                  <ul class="galerie__pas">
+                    <li><a href="assets/img/foto/ai-vr-usmev-1920.webp" data-foto><img src="assets/img/foto/ai-vr-usmev-640.webp" alt="Usměvavý žák s&nbsp;brýlemi pro virtuální realitu a&nbsp;ovladači v&nbsp;rukou" width="640" height="480" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/ai-vr-ovladace-1920.webp" data-foto><img src="assets/img/foto/ai-vr-ovladace-640.webp" alt="Žák s&nbsp;brýlemi pro virtuální realitu míří ovladači před sebe, za ním další žáci s&nbsp;brýlemi" width="640" height="480" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/ai-vr-zblizka-1920.webp" data-foto><img src="assets/img/foto/ai-vr-zblizka-640.webp" alt="Detail brýlí pro virtuální realitu na hlavě žáka, v&nbsp;pozadí další žáci s&nbsp;brýlemi" width="640" height="480" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/ai-snimek-1-1920.webp" data-foto><img src="assets/img/foto/ai-snimek-1-640.webp" alt="Obrazovka aplikace k&nbsp;modulu: zajímavosti o&nbsp;umělé inteligenci s&nbsp;nabídkou témat" width="640" height="360" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/ai-snimek-2-1920.webp" data-foto><img src="assets/img/foto/ai-snimek-2-640.webp" alt="Obrazovka aplikace k&nbsp;modulu: AI dnes a&nbsp;v&nbsp;budoucnosti, kresba mozku z&nbsp;poloviny tvořeného obvody" width="640" height="360" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/ai-snimek-3-1920.webp" data-foto><img src="assets/img/foto/ai-snimek-3-640.webp" alt="Obrazovka aplikace k&nbsp;modulu: obory AI – strojové učení, hluboké učení, zpracování přirozeného jazyka, fuzzy logika, expertní systémy a&nbsp;robotika" width="640" height="360" loading="lazy"></a></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="modul odhal" id="p-kriticke-mysleni">
+              <div class="modul__text">
+                <p class="modul__roky">2019–2024 <span class="odznak">ukončený program</span></p>
+                <h3>Kritické myšlení</h3>
+                <p class="modul__moduly">1 modul: Kritické myšlení</p>
+                <p>Spolu se studenty jsme v&nbsp;laboratoři pravdy hledali odpovědi na otázky: K&nbsp;čemu je kritické myšlení dobré? Kdy ho používat? Co se může stát, pokud kriticky myslet nebudeme?</p>
+                <p>Modul vznikl v&nbsp;úzké spolupráci s&nbsp;Lukášem Hánou, lektorem, konzultantem, tvůrcem a&nbsp;zakladatelem mnoha projektů a&nbsp;iniciativ zaměřených na práci s&nbsp;informacemi a&nbsp;kognitivní zkreslení.</p>
+                <div class="modul__aplikace">
+                  <p class="modul__typ">VR aplikace</p>
+                  <p>Na modul navazuje úniková hra ve virtuální realitě věnovaná především kognitivním zkreslením.</p>
+                </div>
+              </div>
+              <div class="modul__media">
+                <div class="galerie" data-galerie aria-label="Fotky a&nbsp;snímky: Kritické myšlení">
+                  <a class="galerie__hlavni" href="assets/img/foto/km-vr-trida-1920.webp" data-foto><img src="assets/img/foto/km-vr-trida-640.webp" srcset="assets/img/foto/km-vr-trida-640.webp 640w, assets/img/foto/km-vr-trida-1280.webp 1280w" sizes="(max-width: 900px) 100vw, 50vw" alt="Žák s&nbsp;brýlemi pro virtuální realitu a&nbsp;ovladačem ve zdvižené ruce, za ním další žák s&nbsp;brýlemi" width="1280" height="960" loading="lazy"></a>
+                  <ul class="galerie__pas">
+                    <li><a href="assets/img/foto/km-vr-detail-1920.webp" data-foto><img src="assets/img/foto/km-vr-detail-640.webp" alt="Student s&nbsp;brýlemi pro virtuální realitu drží ovladače" width="640" height="480" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/km-vr-dvojice-1920.webp" data-foto><img class="na-vysku" src="assets/img/foto/km-vr-dvojice-640.webp" alt="Dva žáci s&nbsp;brýlemi pro virtuální realitu a&nbsp;ovladači v&nbsp;rukou, jeden z&nbsp;nich se usmívá" width="640" height="854" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/km-snimek-1-1920.webp" data-foto><img src="assets/img/foto/km-snimek-1-640.webp" alt="Snímek prezentace „Co je kritické myšlení?“ se čtyřmi otázkami a&nbsp;kreslenou postavičkou" width="640" height="360" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/km-snimek-2-1920.webp" data-foto><img src="assets/img/foto/km-snimek-2-640.webp" alt="Snímek prezentace „3Z“: zpochybnit, zvážit, zodpovědět" width="640" height="360" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/km-snimek-3-1920.webp" data-foto><img src="assets/img/foto/km-snimek-3-640.webp" alt="Snímek prezentace: laboratoř pravdy, na vahách trailer a&nbsp;hodnocení diváka" width="640" height="360" loading="lazy"></a></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+            <article class="modul odhal" id="p-kyberbezpecnost">
+              <div class="modul__text">
+                <p class="modul__roky">2019–2024 <span class="odznak">ukončený program</span></p>
+                <h3>Kyberbezpečnost</h3>
+                <p class="modul__moduly">2 moduly: Kyberbezpečnost · Kyberbezpečnost&nbsp;2</p>
+                <p>První modul projektu. V&nbsp;letech 2019–2024 seznamoval studenty se základními kyberhrozbami a&nbsp;způsoby, jak se jim bránit.</p>
+                <p>Navazující modul Kyberbezpečnost&nbsp;2 se zaměřil na hrozby, které představují samotní lidé: kyberšikanu, kybergrooming a&nbsp;kyberstalking.</p>
+                <div class="modul__aplikace">
+                  <p class="modul__typ">VR aplikace</p>
+                  <p>V&nbsp;atraktivním virtuálním prostředí odhaluje největší hrozby internetu a&nbsp;sociálních sítí. Účastníci zjistí, jaké následky může mít nevhodné online chování a&nbsp;jak daleko může digitální stopa zasáhnout do reálného života.</p>
+                </div>
+              </div>
+              <div class="modul__media">
+                <div class="prehravac">
+                  <img src="assets/video/aplikace-kyberbezpecnost.webp" alt="Záběr z&nbsp;VR aplikace Kyberbezpečnost: svítící rozhraní s&nbsp;dlaždicemi témat" width="1280" height="720" loading="lazy">
+                  <a class="prehravac__tlacitko" href="assets/video/aplikace-kyberbezpecnost.mp4" data-prehrat>Přehrát záznam <span>1:03</span></a>
+                </div>
+                <div class="galerie" data-galerie aria-label="Fotky a&nbsp;snímky: Kyberbezpečnost">
+                  <ul class="galerie__pas">
+                    <li><a href="assets/img/foto/kb-vr-mapa-1920.webp" data-foto><img src="assets/img/foto/kb-vr-mapa-640.webp" alt="Student s&nbsp;brýlemi pro virtuální realitu ve třídě, za ním mapa světa" width="640" height="480" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/kb-vr-detail-1920.webp" data-foto><img class="na-vysku" src="assets/img/foto/kb-vr-detail-640.webp" alt="Detail studenta s&nbsp;brýlemi pro virtuální realitu a&nbsp;ovladači v&nbsp;rukou" width="640" height="854" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/kb-vr-sal-1920.webp" data-foto><img src="assets/img/foto/kb-vr-sal-640.webp" alt="Žák s&nbsp;brýlemi pro virtuální realitu klečí na parketách v&nbsp;sále" width="640" height="480" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/kb-snimek-1-1920.webp" data-foto><img src="assets/img/foto/kb-snimek-1-640.webp" alt="Snímek prezentace „Kybernebezpečí“: kyberšikana, kyberstalking, kybergrooming" width="640" height="360" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/kb-snimek-2-1920.webp" data-foto><img src="assets/img/foto/kb-snimek-2-640.webp" alt="Snímek prezentace „A&nbsp;teď (kyber)bacha!“: robot u&nbsp;notebooku s&nbsp;nápisem Kybergrooming" width="640" height="360" loading="lazy"></a></li>
+                    <li><a href="assets/img/foto/kb-snimek-3-1920.webp" data-foto><img src="assets/img/foto/kb-snimek-3-640.webp" alt="Snímek prezentace o&nbsp;sociálních sítích a&nbsp;rizicích sdílení osobních údajů" width="640" height="360" loading="lazy"></a></li>
+                  </ul>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Kdo za projektem stojí ===== -->
+    <section class="sekce" id="firmy" aria-labelledby="n-firmy">
+      <div class="obal">
+        <div class="uvodnik">
+          <p class="stitek odhal">Kdo za tím stojí</p>
+          <div><h2 class="teze odhal" id="n-firmy">Dvě firmy, jeden projekt</h2></div>
+        </div>
+        <div class="firmy">
+          <article class="firma odhal">
+            <img class="firma__logo firma__logo--ep" src="assets/logos/ep-industries-320.webp" alt="EP Industries" width="320" height="73" loading="lazy">
+            <p class="firma__role">Nositel projektu</p>
+            <p>Přemýšlej je projekt skupiny EP Industries. Společně s&nbsp;Calliditas vybírá témata, která mají zásadní dopad na život mladých lidí.</p>
+            <p>Skupina EP Industries patří mezi významná průmyslová uskupení v&nbsp;České republice. Sdružuje společnosti působící v&nbsp;oblastech energetiky, odpadového hospodářství, strojírenství, infrastruktury a&nbsp;souvisejících služeb.</p>
+            <p><a href="https://www.epindustries.cz/" target="_blank" rel="noopener">epindustries.cz</a></p>
+          </article>
+          <article class="firma odhal">
+            <img class="firma__logo" src="assets/logos/calliditas-400.webp" alt="Calliditas" width="400" height="132" loading="lazy">
+            <p class="firma__role">Obsah, lektoři a&nbsp;aplikace</p>
+            <p>Calliditas vytváří lekce a&nbsp;veškerý jejich obsah, dodává lektory a&nbsp;jezdí po školách.</p>
+            <p>Česká technologicko-vzdělávací společnost Calliditas Edutainment se specializuje na propojení moderních vzdělávacích metod a&nbsp;nejnovějších technologií. Všemi jejími aktivitami se prolíná Komenského „Škola hrou“ spolu s&nbsp;přesvědčením, že „Nejlepší důkaz je zkušenost“.</p>
+            <p><a href="https://calliditas.net/" target="_blank" rel="noopener">calliditas.net</a></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Kontakt (světlý podklad, originální loga) ===== -->
+    <section class="sekce sekce--kontakt" id="kontakt" aria-labelledby="n-kontakt">
+      <div class="obal">
+        <div class="uvodnik">
+          <p class="stitek">Kontakt</p>
+          <div>
+            <h2 class="teze" id="n-kontakt">Technologie jako nástroj. <span>Ne jako náhrada myšlení.</span></h2>
+            <p class="kontakty">
+              <a href="mailto:info@calliditas.net">info@calliditas.net</a>
+              <a href="tel:+420774783945">+420&nbsp;774&nbsp;783&nbsp;945</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="paticka">
+  <div class="obal">
+    <div class="paticka__loga">
+      <img src="assets/logos/premyslej-420.webp" alt="Přemýšlej" width="420" height="167" loading="lazy">
+      <img class="partner__ep" src="assets/logos/ep-industries-320.webp" alt="EP Industries" width="320" height="73" loading="lazy">
+      <img src="assets/logos/calliditas-400.webp" alt="Calliditas" width="400" height="132" loading="lazy">
+    </div>
+    <p>© 2026 Calliditas s.r.o. Všechna práva vyhrazena.</p>
+  </div>
+</footer>
+
+<!-- ===== Kolejnice: kde v příběhu jsme, a skok na zastávku (stejné polohy jako data-zastavka) ===== -->
+<nav class="kolejnice" aria-label="Postup příběhem">
+  <ol>
+    <li><button type="button" data-skok="1:0" title="Úvod"><span>Úvod</span></button></li>
+    <li><button type="button" data-skok="2b:0.74" title="Proč"><span>Proč</span></button></li>
+    <li><button type="button" data-skok="3:0.90" title="Od roku 2019"><span>Od roku 2019</span></button></li>
+    <li><button type="button" data-skok="4:0.86" title="Kyberbezpečnost"><span>Kyberbezpečnost</span></button></li>
+    <li><button type="button" data-skok="5:0.97" title="Kritické myšlení"><span>Kritické myšlení</span></button></li>
+    <li><button type="button" data-skok="6:0.80" title="Umělá inteligence"><span>Umělá inteligence</span></button></li>
+    <li><button type="button" data-skok="7:0.93" title="Digitální psychohygiena"><span>Digitální psychohygiena</span></button></li>
+    <li><button type="button" data-skok="1" title="Závěr"><span>Závěr</span></button></li>
+  </ol>
+</nav>
+</body>
+</html>

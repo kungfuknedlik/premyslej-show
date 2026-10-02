@@ -1,0 +1,63 @@
+/* ==========================================================================
+   Scéna řízená rolováním – mechanismus (bez obsahu a bez typografie stránky).
+   Bez JavaScriptu se nic z toho nepoužije: všechna pravidla visí na třídě .js,
+   kterou přidává skript v hlavičce. Obsah je pak běžná stránka pod sebou.
+   ========================================================================== */
+
+/* ---------- Scéna: jedna pevná plocha přes celou obrazovku ---------- */
+html:not(.js) .scena { display: none; }
+
+.js .scena {
+  position: fixed; inset: 0 0 auto 0;
+  height: 100vh; height: 100svh;      /* svh se nemění s adresním řádkem na mobilu */
+  overflow: clip; z-index: 0;
+  background: #EEF2F7;                 /* barva prvního snímku, než se načte náhled */
+  contain: strict;
+}
+
+/* Úseky leží trvale přes sebe. První je vždy neprůhledný, takže podklad stránky nikdy neprosvitne. */
+.usek { position: absolute; inset: 0; opacity: 0; }
+.usek:first-child { opacity: 1; }
+
+.usek__nahled,
+.usek__klip,
+.scena__konec {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: var(--stred, 50% 50%);
+}
+/* Klip je vidět až po vykreslení prvního skutečného snímku (třídu přidá skript). */
+.usek__klip { opacity: 0; }
+.usek.ma-klip .usek__klip { opacity: 1; }
+
+/* Závěrečný snímek pro režim náhledů (mobil, omezený pohyb). */
+.scena__konec { opacity: 0; }
+
+/* Bílý závoj přes konec filmu; průhlednost řídí skript (data-zavoj). */
+.scena__zavoj { position: absolute; inset: 0; background: #FFFFFF; opacity: 0; pointer-events: none; }
+
+/* ---------- Pás: jediný prvek v toku stránky, jeho výška je rolovací dráha ---------- */
+html:not(.js) .pas { display: none; }
+/* Výška = (součet vah úseků + 1) × výška obrazovky. Číslo musí sedět s data-vaha v HTML
+   (0,946 + 6 × 1,1 + 1,76 + 1,1 + 1 = 11,406). Když nesedí, skript výšku přepíše sám, jen to stojí
+   jedno rozvržení stránky navíc; kontrola to ohlásí. */
+.js .pas { height: calc(11.406 * 100vh); height: calc(11.406 * 100svh); }
+
+/* ---------- Okna titulků nad filmem ---------- */
+.js .okno {
+  position: fixed; inset: 0 0 auto 0;
+  height: 100vh; height: 100svh;
+  z-index: 2; opacity: 0; pointer-events: none;
+}
+/* Úvodní okno (data-hned) je vidět okamžitě, bez čekání na skript. */
+.js .okno[data-hned] { opacity: 1; }
+.js .okno.je-aktivni .okno__text { pointer-events: auto; }
+
+/* Podložka je sourozenec textu, ne jeho ::before – jinak ji kontrola kontrastu nevidí. */
+.js .podlozka { position: absolute; inset: 0; pointer-events: none; }
+
+/* Obrázky u oken jsou jen pro verzi bez JavaScriptu. */
+.js .okno__obraz { display: none; }
+
+/* ---------- Kolejnice: ukazatel postupu ---------- */
+html:not(.js) .kolejnice { display: none; }
+.js .kolejnice { position: fixed; z-index: 3; }

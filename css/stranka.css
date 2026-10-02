@@ -1,0 +1,230 @@
+/* ==========================================================================
+   Obsah a typografie stránky. Mechanismus scény je v scena.css.
+   Základ (bez .js) je běžná světlá stránka pod sebou; pravidla pro vrstvy
+   nad filmem začínají .js.
+   ========================================================================== */
+
+/* Inter (SIL OFL 1.1), hostovaný lokálně ve dvou částech: základní latinka a rozšířená
+   latinka s českými písmeny. Čeština potřebuje obě. */
+@font-face {
+  font-family: "Inter";
+  src: url("../assets/fonts/Inter-latin-ext.woff2") format("woff2");
+  font-weight: 100 900; font-style: normal; font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("../assets/fonts/Inter-latin.woff2") format("woff2");
+  font-weight: 100 900; font-style: normal; font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  color-scheme: only light;          /* pevný světlý režim */
+  --papir: #FFFFFF;
+  --inkoust: #0B1526;                /* hlavní text na světlé (kontrast ~18:1) */
+  --tlumeny: #4B5B71;                /* doplňkový text na světlé (kontrast ~7:1) */
+  --linka: rgba(11, 21, 38, .16);
+  --tmava: #1B4B8F;                  /* tmavá modrá značky – text na světlé (~9:1) */
+  --stredni: #2E86C1;                /* střední modrá značky – jen velké prvky a obrysy */
+  --svetla: #5EB9F0;                 /* světlá modrá značky – jen na tmavé ploše */
+  --na-tmave: #EEF3F9;               /* text na tmavém filmu */
+  --na-tmave-2: #C9D6E6;
+  --okraj: clamp(1.25rem, 4vw, 5rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--papir); color: var(--inkoust);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-optical-sizing: auto;         /* velké nadpisy použijí zobrazovací řez Interu */
+  font-size: 1.0625rem; line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+p { margin: 0; }
+
+/* Viditelný focus na světlém i tmavém filmu: modrý obrys s bílým lemem. */
+:focus-visible { outline: 3px solid var(--stredni); outline-offset: 3px; box-shadow: 0 0 0 6px #FFFFFF; border-radius: 4px; }
+
+.preskocit {
+  position: absolute; left: 1rem; top: -4rem; z-index: 10;
+  background: var(--inkoust); color: #FFFFFF; padding: .6rem 1rem; border-radius: 8px; font-weight: 600;
+}
+.preskocit:focus { top: 1rem; }
+
+/* ---------- Společná typografie titulků ---------- */
+.znacka { width: clamp(7.5rem, 10vw, 13rem); }
+
+.claim {
+  margin: 0; font-size: clamp(2.1rem, 4.3vw, 6rem); font-weight: 750;
+  line-height: 1; letter-spacing: -0.04em; color: var(--inkoust);
+}
+/* každá věta claimu na vlastním řádku, zalomení vyvážené */
+.claim > span { display: block; text-wrap: balance; }
+.claim > span + span { color: var(--tmava); }
+
+.partneri {
+  display: flex; flex-wrap: wrap; align-items: flex-end; gap: 1rem clamp(1.2rem, 2vw, 2.6rem);
+  width: fit-content; margin-top: clamp(1.6rem, 3vw, 3.6rem); padding-top: clamp(1rem, 1.5vw, 1.9rem);
+  border-top: 1px solid var(--linka);
+}
+.partner { display: grid; gap: .5rem; text-decoration: none; }
+.partner small { font-size: clamp(.66rem, .68vw, .85rem); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--tlumeny); }
+.partner img { height: clamp(2.3rem, 2.7vw, 3.4rem); width: auto; }
+.partner .partner__ep { height: clamp(1.45rem, 1.7vw, 2.15rem); margin-block: clamp(.42rem, .5vw, .62rem); }
+.partner + .partner { padding-left: clamp(1.2rem, 2vw, 2.6rem); border-left: 1px solid var(--linka); }
+
+.veta {
+  font-size: clamp(1.7rem, 3.6vw, 5rem); font-weight: 750; line-height: 1.04; letter-spacing: -0.035em;
+  max-width: 19em; text-wrap: balance;
+}
+.doplnek { margin-top: clamp(.7rem, 1.3vw, 1.6rem); font-size: clamp(1rem, 1.45vw, 1.95rem); line-height: 1.4; max-width: 44em; color: var(--tlumeny); }
+
+/* ==========================================================================
+   Bez JavaScriptu: běžná stránka, obrázek a pod ním text
+   ========================================================================== */
+html:not(.js) .okno { max-width: 72rem; margin-inline: auto; padding: clamp(1.5rem, 4vw, 3rem) var(--okraj) clamp(2rem, 5vw, 4rem); }
+html:not(.js) .okno + .okno { border-top: 1px solid var(--linka); }
+html:not(.js) .okno__obraz { width: 100%; border-radius: 6px; margin-bottom: clamp(1.2rem, 3vw, 2.2rem); }
+html:not(.js) .znacka { margin-bottom: clamp(1.2rem, 3vw, 2rem); }
+
+/* ==========================================================================
+   Se scénou: titulky jako vrstvy nad filmem
+   ========================================================================== */
+
+/* ----- Světlý film (úvod a finále): značka vlevo nahoře, claim tmavým písmem ----- */
+.js .okno--uvod .podlozka {
+  background: linear-gradient(to right, rgba(255,255,255,.92) 0%, rgba(255,255,255,.86) 36%, rgba(255,255,255,0) 54%);
+}
+.js .okno--svetle .okno__text {
+  position: absolute; left: var(--okraj); top: 0; bottom: 0; width: min(37vw, 46rem);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.js .okno--svetle .znacka { position: absolute; left: 0; top: clamp(1.25rem, 3vw, 3.5rem); }
+
+/* Finále: snímek je prázdný, claim proto smí být širší (dva řádky). Podložka kryje sklo,
+   které za textem ještě prolétá, než film úplně zesvětlá. */
+.js .okno--finale .podlozka {
+  background: linear-gradient(to right, rgba(255,255,255,.92) 0%, rgba(255,255,255,.88) 52%, rgba(255,255,255,0) 82%);
+}
+.js .okno--finale .okno__text { width: min(66vw, 82rem); }
+
+/* ----- Bílá značka v tmavých úsecích (na stejném místě jako logo v úvodu) ----- */
+html:not(.js) .okno--znacka { display: none; }
+.js .okno--znacka .znacka { position: absolute; left: var(--okraj); top: clamp(1.25rem, 3vw, 3.5rem); }
+/* Film má vlevo nahoře místy světlé sklo; měkké ztmavení rohu drží bílou značku čitelnou. */
+.js .okno--znacka {
+  background: radial-gradient(42vw 34vh at 0% 0%, rgba(4,10,22,.62) 0%, rgba(4,10,22,.4) 45%, rgba(4,10,22,0) 100%);
+}
+
+/* ----- Tmavý film: světlý text dole, pod ním tmavá podložka ----- */
+.js .okno--tmave { color: var(--na-tmave); }
+.js .okno--tmave .doplnek { color: var(--na-tmave-2); }
+.js .okno--tmave .podlozka {
+  background: linear-gradient(to top, rgba(4,10,22,.86) 0%, rgba(4,10,22,.74) 30%, rgba(4,10,22,0) 62%);
+}
+.js .okno--dole .okno__text { position: absolute; left: clamp(1.25rem, 6vw, 7.5rem); right: clamp(1.25rem, 6vw, 7.5rem); bottom: clamp(2rem, 6vw, 7.5rem); }
+
+/* ----- Kolejnice: zastávky příběhu v tmavé pilulce, čitelné na světlém i tmavém filmu -----
+   Každá zastávka je tečka; název je vidět jen u té, kde právě jsme (ostatní ho mají pro čtečky
+   a v bublině při najetí myší). */
+.js .kolejnice { top: clamp(1rem, 2.6vw, 3rem); right: var(--okraj); }
+.kolejnice ol {
+  list-style: none; margin: 0; padding: .3rem; display: flex; align-items: center; gap: .1rem;
+  background: rgba(11, 21, 38, .78); border-radius: 999px;
+}
+.kolejnice button {
+  display: grid; place-items: center; min-width: 1.9rem; height: 2.1rem; padding: 0 .3rem;
+  font: inherit; font-size: .82rem; font-weight: 600; letter-spacing: .01em; line-height: 1;
+  color: #FFFFFF; background: transparent; border: 0; border-radius: 999px; cursor: pointer;
+}
+.kolejnice button span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.kolejnice button::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; border: 2px solid #FFFFFF; }
+.kolejnice button:hover { background: rgba(255, 255, 255, .14); }
+.kolejnice button[aria-current] { background: #FFFFFF; color: var(--inkoust); padding: 0 .95rem; }
+.kolejnice button[aria-current]::before { content: none; }
+.kolejnice button[aria-current] span { position: static; width: auto; height: auto; overflow: visible; clip-path: none; }
+
+/* ==========================================================================
+   Úvodní uvítání (jednou po načtení, celé do 2 sekund; řídí js/uvitani.js)
+   .uvitani-ceka = skrytý výchozí stav, .uvitani-bezi = animace běží.
+   Odebráním obou tříd je stránka okamžitě v hotovém stavu.
+   ========================================================================== */
+.uvitani-ceka .okno--uvod .claim,
+.uvitani-ceka .okno--uvod .znacka,
+.uvitani-ceka .okno--uvod .partneri,
+.uvitani-ceka .kolejnice {
+  opacity: 0;
+  animation: uvitani-pojistka .01s 3s forwards;   /* kdyby se skript nenačetl, obsah se ukáže sám */
+}
+@keyframes uvitani-pojistka { to { opacity: 1; } }
+
+/* Film se vynoří z lehkého rozostření a jemně dosedne. Běží čistě v CSS už od prvního
+   vykreslení (nečeká na skript), stejné pravidlo platí pro obě třídy, takže se při
+   přepnutí z .uvitani-ceka na .uvitani-bezi nespustí znovu. */
+.uvitani-ceka .scena,
+.uvitani-bezi .scena { animation: uvitani-film 1.3s cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes uvitani-film {
+  from { opacity: 0; filter: blur(14px); transform: scale(1.07); }
+  to   { opacity: 1; filter: blur(0);    transform: scale(1); }
+}
+
+/* claim po řádcích zespodu: každé slovo má masku, zpoždění podle řádku nastaví skript */
+.claim .slovo {
+  display: inline-block; overflow: hidden; vertical-align: top;
+  padding: .08em .06em .16em 0; margin: -.08em -.06em -.16em 0;   /* místo pro háčky, dolní dotahy a poslední písmeno */
+}
+.claim .slovo > span { display: inline-block; }
+.uvitani-bezi .claim .slovo > span { animation: uvitani-radek .7s cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes uvitani-radek { from { transform: translateY(120%); } to { transform: none; } }
+
+/* značka, partneři s dělicí linkou a kolejnice jako poslední */
+.uvitani-bezi .okno--uvod .znacka,
+.uvitani-bezi .okno--uvod .partneri,
+.uvitani-bezi .kolejnice { animation: uvitani-objev .5s ease-out 1.15s both; }
+@keyframes uvitani-objev { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ==========================================================================
+   Obrazovky užší než 16:9 (projektory 16:10 a 4:3)
+   Film se ořezává ze stran. Výřez se posouvá doleva, aby volná plocha pro claim
+   zůstala a skleněný předmět do textu nezasahoval. Posun je stejný pro všechny
+   úseky, jinak by obraz na švu poskočil.
+   ========================================================================== */
+@media (min-width: 769px) and (max-aspect-ratio: 17/10) { .scena { --stred: 8% 50%; } }
+@media (min-width: 769px) and (max-aspect-ratio: 7/5)   { .scena { --stred: 30% 50%; } }
+
+/* ==========================================================================
+   Úzké obrazovky (prototyp: náhledy místo videa)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .usek--1 { --stred: 76% 50%; }     /* předmět je v pravé polovině snímku */
+
+  .js .okno--uvod .podlozka {
+    background: linear-gradient(to bottom, rgba(255,255,255,.9) 0%, rgba(255,255,255,.86) 52%, rgba(255,255,255,0) 78%);
+  }
+  .js .okno--finale .podlozka { background: rgba(255,255,255,.82); }
+  .js .okno--svetle .okno__text { right: var(--okraj); width: auto; justify-content: flex-start; padding-top: clamp(6.5rem, 30vw, 9rem); }
+  .js .okno--svetle .znacka, .js .okno--znacka .znacka { top: 1.25rem; width: 7.5rem; }
+  .claim { font-size: clamp(2.05rem, 9.4vw, 3.2rem); }
+  .veta { font-size: clamp(1.6rem, 7.2vw, 2.4rem); }
+  .js .okno--tmave .podlozka {
+    background: linear-gradient(to top, rgba(4,10,22,.9) 0%, rgba(4,10,22,.8) 42%, rgba(4,10,22,0) 78%);
+  }
+
+  /* Kolejnice: jen tečky, názvy zůstávají pro čtečky. */
+  .js .kolejnice { top: 1.15rem; }
+  .kolejnice ol { padding: .15rem; gap: 0; }
+  /* 24 px na šířku je nejmenší přípustný dotykový cíl; osm zastávek se tak vejde vedle loga */
+  .kolejnice button, .kolejnice button[aria-current] { padding: 0; min-width: 1.5rem; width: 1.5rem; height: 2.75rem; background: transparent; }
+  .kolejnice button[aria-current] span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .kolejnice button[aria-current]::before { content: ""; background: #FFFFFF; }
+}
+@media (max-width: 420px) {
+  .js .okno--svetle .znacka, .js .okno--znacka .znacka { width: 6.5rem; }   /* místo pro kolejnici */
+}
+@media (max-width: 350px) {
+  .js .kolejnice { display: none; }      /* na nejužších telefonech by se s logem nevešla; klávesy a rolování fungují dál */
+}
